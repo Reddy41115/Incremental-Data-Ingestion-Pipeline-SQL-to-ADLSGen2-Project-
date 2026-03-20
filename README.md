@@ -10,47 +10,30 @@ Key features:
 - Integration with **Logic Apps** for alerting
 <img width="1138" height="362" alt="image" src="https://github.com/user-attachments/assets/5e583909-621c-4bf8-90b6-d20b5b84b492" />
 
-## 🔄 Pipeline Activities
+## Pipeline Activities
 
-The pipeline includes the following activities:
+This pipeline uses the following activities:
 
-- **ForEach (ForEach1)**  
-  Loops through multiple tables using parameters.
-
-- **Lookup (last_cdc)**  
-  Retrieves the last processed CDC value from ADLS Gen2.
-
-- **Set Variable (current)**  
-  Stores current timestamp for dynamic file naming.
-
-- **Copy (AzureSql_to_Adlsgen2)**  
-  Loads incremental data from Azure SQL Database to ADLS Gen2 in Parquet format.
-
-- **If Condition (if_incremental_data)**  
-  Checks if data is available after copy operation.
-
-- **Delete (Delete_Empty_file)**  
-  Deletes file if no data is loaded.
-
-- **Script (max_cdc)**  
-  Gets the latest CDC value from source table.
-
-- **Copy (update_last_cdc)**  
-  Updates the latest CDC value into JSON file.
-
-- **Web Activity (Web1)**  
-  Sends pipeline status to Logic Apps for notification.
+- ForEach (ForEach1) – Loop through multiple tables  
+- Lookup (last_cdc) – Get last processed value  
+- Set Variable (current) – Store current timestamp  
+- Copy (AzureSql_to_Adlsgen2) – Load data from SQL to ADLS  
+- If Condition (if_incremental_data) – Check if data is loaded  
+- Delete (Delete_Empty_file) – Remove empty file  
+- Script (max_cdc) – Get latest value from source  
+- Copy (update_last_cdc) – Update latest value  
+- Web Activity (Web1) – Send pipeline status  
 
 ---
 
-## 🔁 Flow Summary
+## Flow
 
-1. Iterate tables using **ForEach**
-2. Get last CDC value using **Lookup**
-3. Capture current time
-4. Load incremental data using **Copy**
-5. Check data using **If Condition**
+1. Loop tables using ForEach  
+2. Get last value using Lookup  
+3. Set current time  
+4. Load data using Copy  
+5. Check data using If Condition  
 6.  
    - No data → Delete file  
-   - Data present → Update CDC  
-7. Trigger notification using **Web Activity**
+   - Data → Update latest value  
+7. Send notification using Web Activity  
